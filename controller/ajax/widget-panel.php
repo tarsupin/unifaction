@@ -10,11 +10,6 @@ $featuredWidget = new FeaturedWidget($hashtag, $categories);
 // If you want to display the FeaturedWidget by itself:
 echo $featuredWidget->get();
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 // Prepare the Trending Widget Data
 $trendingCount = 6;
 

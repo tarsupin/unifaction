@@ -18,11 +18,7 @@ echo '
 // List of Values to show
 $array = array(
 		"UniFaction"		=> URL::unifaction_com()
-<<<<<<< HEAD
-	,	"Dashboard"			=> URL::unifaction_com()
-=======
 	,	"Dashboard"			=> URL::auth_unifaction_com()
->>>>>>> origin/master
 	,	"My Feed"			=> URL::feed_unifaction_com()
 	,	"My Uni"			=> URL::unifaction_me()
 	,	"Social"			=> URL::unifaction_social()

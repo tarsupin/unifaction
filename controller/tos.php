@@ -38,11 +38,7 @@ echo '
 
 <p>The same is true of our Privacy Policy, which is a document that we HIGHLY recommend that you read. Not only will it explain the privacy of our site, but it is helpful at understanding privacy in general.</p>
 
-<<<<<<< HEAD
-<p>To protect our site, we may need to update and apply a long list of legal rules in this document. Many of those rules may be written with complicated terminology by lawyers who understand it to avoid any legal exploitation, but we will do whatever we can help you understand them in more simple terms. Nevertheless, we do have to use terminology that will protect us in all of the appropriate situations, so hopefully our summaries will suffice in making this a more enjoyable document to review.</p>
-=======
 <p>To protect our site, we may need to update and apply a long list of legal rules in this document. Many of those rules may be written with complicated terminology by lawyers who understand it to avoid any legal exploitation, but we will do whatever we can help you understand them in more simple terms. Nevertheless, we do have to use terminology that will product us in all of the appropriate situations, so hopefully our summaries will suffice in making this a more enjoyable document to review.</p>
->>>>>>> origin/master
 
 <p>UniFaction requires the ability to store, modify, and show data that is created on the site. Otherwise the site can't function. If we can't show or store data that gets created on the site, the site wouldn't do anything. While this would seem rather obvious, we have to explicitly state that we require this ability. This document requires that all users grant us the right to store, modify, and reveal to others, any information that is created or acquired from the users browsing this site. This includes any data you submitted through our forms, gathered from the use of our links, or while otherwise browsing our site. For example, if you submit an image or comment on one of our sites, we have the right to save that post in our database and show it to others when people view that post. We also have the right for admins and moderators to edit the post if it is necessary to do so.</p>
 
