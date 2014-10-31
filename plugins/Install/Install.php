@@ -8,7 +8,7 @@ abstract class Install extends Installation {
 	
 	// These addon plugins will be selected for installation during the "addon" installation process:
 	public static $addonPlugins = array(	// <str:bool>
-	//	"Example"			=> true
+		"Email"			=> true
 	);
 	
 	

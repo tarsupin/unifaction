@@ -7,19 +7,32 @@ if(!Me::$loggedIn)
 }
 
 // Get Settings Data
-$settingsData = Database::selectOne("SELECT email, password, timezone, verified FROM users WHERE uni_id=? LIMIT 1", array(Me::$id));
+$settingsData = Database::selectOne("SELECT email, display_name, password, timezone, verified FROM users WHERE uni_id=? LIMIT 1", array(Me::$id));
 
 $timezones = Time::timezones();
 
 // Check the Form
 if(Form::submitted("auth-global-edit"))
 {
+	// If the password was changed
+	if($_POST['display_name'] != "" and $_POST['display_name'] != $settingsData['display_name'])
+	{
+		FormValidate::safeword("Display Name", $_POST['display_name'], 3, 32);
+		
+		if(FormValidate::pass("Display Name"))
+		{
+			Database::query("UPDATE users SET display_name=? WHERE uni_id=? LIMIT 1", array($_POST['display_name'], Me::$id));
+			
+			Alert::success("Display Name", "Your display name has been updated successfully.");
+		}
+	}
+	
 	// If the email was changed
 	if($_POST['email'] != $settingsData['email'])
 	{
-		FormValidate::email($_POST['email']);
+		FormValidate::email("Email", $_POST['email']);
 		
-		if(FormValidate::pass())
+		if(FormValidate::pass("Email"))
 		{
 			if($settingsData['verified'])
 			{
@@ -55,9 +68,9 @@ if(Form::submitted("auth-global-edit"))
 	{
 		if($passCheck = Security::getPassword($_POST['password_current'], $settingsData['password']))
 		{
-			FormValidate::password($_POST['password_new']);
+			FormValidate::password("Password", $_POST['password_new']);
 			
-			if(FormValidate::pass())
+			if(FormValidate::pass("Password"))
 			{
 				// Update the new password
 				$newPass = Security::setPassword($_POST['password_new']);
@@ -92,6 +105,7 @@ if(Form::submitted("auth-global-edit"))
 
 // Prepare Defaults
 $_POST['email'] = (isset($_POST['email']) ? $_POST['email'] : $settingsData['email']);
+$_POST['display_name'] = (isset($_POST['display_name']) ? $_POST['display_name'] : $settingsData['display_name']);
 $_POST['timezone'] = (isset($_POST['timezone']) ? $_POST['timezone'] : $settingsData['timezone']);
 
 // Run Global Script
@@ -117,14 +131,17 @@ echo '
 
 <form class="uniform" action="/user-panel/account/master-edit" method="post">' . Form::prepare("auth-global-edit") . '
 	
-	<h4>Change Email</h4>
+	<h4>Update Email</h4>
 	<input type="text" name="email" value="' . $_POST['email'] . '" size="40" autocomplete="off" />
 	
-	<h4 style="margin-top:22px;">Change Password</h4>
-	<input type="password" name="password_current" value="" placeholder="Current Password" size="40" /><br />
-	<input type="password" name="password_new" value="" placeholder="New Password" size="40" />
+	<h4 style="margin-top:22px;">Set Display Name</h4>
+	<input type="text" name="display_name" value="' . $_POST['display_name'] . '" placeholder="Display Name" maxlength="32" size="40" />
 	
-	<h4 style="margin-top:22px;">Change Timezone</h4>';
+	<h4 style="margin-top:22px;">Update Password</h4>
+	<input type="password" name="password_current" value="" placeholder="Current Password" size="40" maxlength="100" /><br />
+	<input type="password" name="password_new" value="" placeholder="New Password" size="40" maxlength="100" />
+	
+	<h4 style="margin-top:22px;">Set Timezone</h4>';
 	
 	// Timezone
 	echo '

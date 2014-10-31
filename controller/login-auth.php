@@ -199,8 +199,6 @@ require(SYS_PATH . "/controller/includes/header.php");
 // Display Side Panel
 require(SYS_PATH . "/controller/includes/side-panel.php");
 
-//  &nbsp; &nbsp; <a href="/register">Join UniFaction</a>
-
 // Display the Page
 echo '
 <div id="content">' . Alert::display() . '
@@ -215,6 +213,7 @@ echo '
 
 <div style="margin-top:50px;">
 	<p><a href="/user-panel/password-reset">Forgot Your Password?</a></p>
+	<p><a href="/register">Join UniFaction</a></p>
 </div>
 
 </div>';

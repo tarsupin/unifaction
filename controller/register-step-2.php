@@ -47,7 +47,7 @@ if(Form::submitted("uni-reg-step-fin"))
 		Database::startTransaction();
 		
 		// Register the User
-		if($pass = Database::query("INSERT INTO users (handle, email, password, date_joined, auth_token) VALUES (?, ?, ?, ?, ?)", array($_SESSION[SITE_HANDLE]['register-username'], $_POST['email'], $_SESSION[SITE_HANDLE]['register-password'], time(), Security::randHash(22, 72))))
+		if($pass = Database::query("INSERT INTO users (handle, email, display_name, password, date_joined, auth_token) VALUES (?, ?, ?, ?, ?, ?)", array($_SESSION[SITE_HANDLE]['register-username'], $_POST['email'], ucfirst($_SESSION[SITE_HANDLE]['register-username']), $_SESSION[SITE_HANDLE]['register-password'], time(), Security::randHash(22, 72))))
 		{
 			$uniID = (int) Database::$lastID;
 			
