@@ -148,7 +148,7 @@ echo '
 <h4 style="margin-top:35px;">Verify your email</h4>
 	<p>Note: this helps prevent spam and allows password recovery. We won\'t spam you! (See our <a href="/docs/privacy">privacy policy</a>)</p>
 	<p><input type="text" name="email" value="' . $_POST['email'] . '" placeholder="Email . . ." tabindex="20" style="min-width:250px;" /></p>
-	<p><input type="checkbox" name="tos" ' . (isset($_POST['tos']) ? 'checked' : '') . '  tabindex="30" /> I agree to the <a href="' . URL::unifaction_com() . '/tos">Terms of Service</a></p>
+	<p><input type="checkbox" name="tos" ' . (isset($_POST['tos']) ? 'checked' : '') . '  tabindex="30" target="_new" /> I agree to the <a href="' . URL::unifaction_com() . '/tos">Terms of Service</a></p>
 	<p><input type="submit" name="submit" value="Finish Registration" tabindex="40" /></p>';
 
 echo '
