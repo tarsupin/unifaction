@@ -5,12 +5,9 @@
 	
 	$_SESSION[SITE_HANDLE]['site_login']
 		['site']					// The site var that sent us here
-		['return-to-url']			// The page to redirect to on success
 		['handshake']				// The handshake used between the sites (to verify return)
-		['action']					// The type of login (soft, switch, etc)
-		['mode']					// The mode of login (recommend 1 profile, standard, etc)
 	
-	If we're not logged into auth yet, we still need to keep these values, then apply them when we're here.
+	If we're not logged into UniFaction yet, we still need to keep these values, then apply them when we're here.
 */
 
 // Need to retrieve Me::$id early (is normally called during global, but we need it sooner for logging purposes)
@@ -20,7 +17,7 @@ if(isset($_SESSION[SITE_HANDLE]['uni_id']))
 }
 
 // Gather data for incoming requests
-if(isset($_GET['ret']) && isset($_GET['shk']) && isset($_GET['site']) && isset($_GET['conf']))
+if(isset($_GET['shk']) && isset($_GET['site']) && isset($_GET['conf']))
 {
 	// Get the API Key for this setup
 	if($key = Network::key($_GET['site']))
@@ -28,20 +25,10 @@ if(isset($_GET['ret']) && isset($_GET['shk']) && isset($_GET['site']) && isset($
 		// Make sure the handshake ($_GET['shk']) and confirmation ($_GET['conf']) are valid
 		if($_GET['conf'] == Security::hash($_GET['site'] . $_GET['shk'] . $key, 20, 62))
 		{
-			// Prepare Values
-			$_GET['logMode'] = isset($_GET['logMode']) ? $_GET['logMode'] : '';
-			$_GET['logAct'] = isset($_GET['logAct']) ? $_GET['logAct'] : '';
-			
 			// Track the login instructions
 			$_SESSION[SITE_HANDLE]['site_login'] = array(
-			
 				'site'				=>	$_GET['site']
-			,	'return-to-url'		=>	$_GET['ret']
 			,	'handshake'			=>	$_GET['shk']
-			
-			,	'action'			=> (in_array($_GET['logAct'], array("soft", "switch")) ? $_GET['logAct'] : "standard")
-			,	'mode'				=> (in_array($_GET['logMode'], array("1rec")) ? $_GET['logMode'] : "standard")
-			
 			);
 		}
 	}
@@ -84,13 +71,11 @@ unset($getUniAccount['email']);
 unset($getUniAccount['verified']);
 
 // Save certain values that we're about to remove from the session
-$returnTo = $_SESSION[SITE_HANDLE]['site_login']['return-to-url'];
 $site = $_SESSION[SITE_HANDLE]['site_login']['site'];
+$handshake = $_SESSION[SITE_HANDLE]['site_login']['handshake'];
 
 // Remove unnecessary session values
-unset($_SESSION[SITE_HANDLE]['site_login']['return-to-url']);
 unset($_SESSION[SITE_HANDLE]['site_login']['site']);
-unset($_SESSION[SITE_HANDLE]['site_login']['mode']);
 
 // Get the API Key for this setup
 if($siteData = Network::get($site))
@@ -99,13 +84,13 @@ if($siteData = Network::get($site))
 	AppTracker::connect($getUniAccount['uni_id'], $site);
 	
 	// Return the handshake value (prevents reuse of any exchange)
-	$getUniAccount['handshake'] = $_SESSION[SITE_HANDLE]['site_login']['handshake'];
+	$getUniAccount['handshake'] = $handshake;
 	
 	// Drop the entire session for external logins
 	unset($_SESSION[SITE_HANDLE]['site_login']);
 	
 	// Prepare the Encryption
-	$enc = Encrypt::run($key, json_encode($getUniAccount));
+	$enc = Encrypt::run($siteData['site_key'], json_encode($getUniAccount));
 	
 	// Return to the original page
 	header("Location: " . $siteData['site_url'] . "/login?enc=" . rawurlencode($enc)); exit;
