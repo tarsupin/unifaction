@@ -87,13 +87,13 @@ unset($getUniAccount['verified']);
 $returnTo = $_SESSION[SITE_HANDLE]['site_login']['return-to-url'];
 $site = $_SESSION[SITE_HANDLE]['site_login']['site'];
 
-// Remove unecessary session values
+// Remove unnecessary session values
 unset($_SESSION[SITE_HANDLE]['site_login']['return-to-url']);
 unset($_SESSION[SITE_HANDLE]['site_login']['site']);
 unset($_SESSION[SITE_HANDLE]['site_login']['mode']);
 
 // Get the API Key for this setup
-if($key = Network::key($site))
+if($siteData = Network::get($site))
 {
 	// Track this connection to the origin site
 	AppTracker::connect($getUniAccount['uni_id'], $site);
@@ -108,7 +108,7 @@ if($key = Network::key($site))
 	$enc = Encrypt::run($key, json_encode($getUniAccount));
 	
 	// Return to the original page
-	header("Location: " . $returnTo . "?enc=" . rawurlencode($enc)); exit;
+	header("Location: " . $siteData['site_url'] . "/login?enc=" . rawurlencode($enc)); exit;
 }
 
 // Unable to find an appropriate site for login
