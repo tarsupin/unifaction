@@ -28,20 +28,27 @@ if(Form::submitted("add-user-uni6"))
 		$uniID = 0;
 		
 		// Check if the account already exists
-		if($checkAuth = Database::selectValue("SELECT uni_id FROM users WHERE handle=? LIMIT 1", array($_POST['login'])))
+		if($checkAuth = Database::selectValue("SELECT uni_id FROM users WHERE handle=? LIMIT 1", array($_POST['handle'])))
 		{
 			$uniID = (int) $checkAuth;
 		}
 		
 		// If the account doesn't already exist, try to create it
-		else if($regSuccess = Database::query("INSERT INTO users (handle, email, password, date_joined, auth_token) VALUES (?, ?, ?, ?, ?)", array($_POST['login'], $_POST['email'], Security::setPassword($_POST['password']), time(), Security::randHash(22, 72))))
+		else if($regSuccess = Database::query("INSERT INTO users (handle, display_name, email, password, date_joined, auth_token) VALUES (?, ?, ?, ?, ?, ?)", array($_POST['handle'], $_POST['display_name'], $_POST['email'], Security::setPassword($_POST['password']), time(), Security::randHash(22, 72))))
 		{
 			$uniID = (int) Database::$lastID;
 			
-			// Email a verification letter
-			AppVerification::sendVerification($uniID);
-			
-			Alert::success("Email Sent", "The account was created successfully! A verification email has been sent to " . $_POST['email'] . "!");
+			if(isset($_POST['send_email']))
+			{
+				// Email a verification letter
+				AppVerification::sendVerification($uniID);
+				
+				Alert::success("Email Sent", "The account was created successfully! A verification email has been sent to " . $_POST['email'] . "!");
+			}
+			else
+			{
+				Alert::success("User Added", "The account was created successfully!");
+			}
 		}
 		
 		// Create the account
@@ -110,6 +117,11 @@ echo '
 <p>
 	<strong>Email:</strong><br />
 	<input type="text" name="email" value="' . $_POST['email'] . '" style="width:95%;" maxlength="80" />
+</p>
+
+<p>
+	<strong>Send Verification Email:</strong><br />
+	<input type="checkbox" name="send_email" checked /> Send the user a verification email.
 </p>
 
 <p><input type="submit" name="submit" value="Add User" /></p>
