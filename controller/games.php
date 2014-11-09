@@ -18,7 +18,6 @@ echo '
 The arcade / game universe is not available yet. Tis coming.';
 
 echo '
-	</div>
 </div>';
 
 // Display the Footer

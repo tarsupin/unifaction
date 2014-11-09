@@ -30,6 +30,34 @@ echo '
 <div id="panel-right"></div>
 <div id="content">' . Alert::display();
 
+if(Me::$loggedIn)
+{
+	if(!isset($_GET['unifeed']))
+	{
+		// Prepare the packet
+		$packet = array(
+			"uni_id"			=> Me::$id		// The UniID to send a feed to.
+		,	"page"				=> 1			// The page to return.
+		,	"num_results"		=> 30			// The number of results to return.
+		);
+		
+		$feedData = Connect::to("sync_feed", "MyFeedAPI", $packet);
+		
+		// Sort the data by newest results
+		krsort($feedData);
+		
+		echo '
+		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">My Feed</a></div>
+		<div style="display:inline-block;"><a href="/?unifeed=1" style="display:block; padding:2px 8px 2px 8px;">UniFaction Feed</a></div>';
+	}
+	else
+	{
+		echo '
+		<div style="display:inline-block;"><a href="/" style="display:block; padding:2px 8px 2px 8px;">My Feed</a></div>
+		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">UniFaction Feed</a></div>';
+	}
+}
+
 AppHomeFeed::displayFeed($feedData, false, Me::$id);
 
 echo '
