@@ -18,22 +18,32 @@ if(Form::submitted("auth-pass-reset"))
 	}
 	else if(FormValidate::pass())
 	{
-		$link = Confirm::createLink("reset-password", (int) $userData['uni_id'], array("chk" => Security::hash(substr($userData['password'], 20, 20), 15, 62)), 10);
+		// Create the appropriate confirmation value
+		$confValue = Security::randHash(14, 62);
 		
-		// Prepare the message
-		$message = 'Hello,
+		if(Confirm::create($confValue, array("type" => "password-reset", "uni_id" => (int) $userData['uni_id'])))
+		{
+			// Prepare the message
+			$message = 'Hello,
 
-A password request has been requested for your UniFaction account. To reset your password, please visit the following link:
+A password request has been requested for your UniFaction account.
 
-' . $link . '
+Your confirmation value is: ' . $confValue . '
 
 Thank You!
 UniFaction';
-		
-		// Send an Email
-		Email::send($userData['email'], "Password Reset for UniFaction", $message);
-		
-		Alert::success("Email Sent", "Success! Your password reset email has been sent to " . $userData['email'] . "!");
+			
+			// Send an Email
+			Email::send($userData['email'], "Password Reset for UniFaction", $message);
+			
+			Alert::success("Email Sent", "Success! A confirmation value has been sent to " . $userData['email'] . "!");
+			
+			header("Location: /confirm"); exit;
+		}
+		else
+		{
+			Alert::error("Email Failed", "There was an error creating the confirmation for this. Please try again later.");
+		}
 	}
 }
 

@@ -94,7 +94,7 @@ abstract class AppHomeFeed {
 		// Make sure Content IDs are available
 		if(!$feedData)
 		{
-			echo "No articles available here at this time."; return;
+			echo '<p style="margin-top:16px; margin-bottom:0px">No articles available here at this time.</p>'; return;
 		}
 		
 		// Prepare Values

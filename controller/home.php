@@ -49,6 +49,11 @@ if(Me::$loggedIn)
 		echo '
 		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">My Feed</a></div>
 		<div style="display:inline-block;"><a href="/?unifeed=1" style="display:block; padding:2px 8px 2px 8px;">UniFaction Feed</a></div>';
+		
+		if(!$feedData)
+		{
+			echo '<div style="margin-top:16px;">This is your personal UniFaction feed!</div><div style="margin-top:16px;">Follow things by clicking the "+" button on any article hashtag.</div>';
+		}
 	}
 	else
 	{

@@ -30,28 +30,38 @@ if(Form::submitted("auth-global-edit"))
 	// If the email was changed
 	if($_POST['email'] != $settingsData['email'])
 	{
-		FormValidate::email("Email", $_POST['email']);
+		FormValidate::email($_POST['email']);
 		
 		if(FormValidate::pass("Email"))
 		{
 			if($settingsData['verified'])
 			{
-				$link = Confirm::createLink("email-change", Me::$id, array("newEmail" => $_POST['email']), 10);
+				// Create the appropriate confirmation value
+				$confValue = Security::randHash(14, 62);
 				
-				// Prepare the message
-				$message = 'Hello,
+				if(Confirm::create($confValue, array("type" => "email-change", "uni_id" => Me::$id, "new_email" => $_POST['email'])))
+				{
+					// Prepare the message
+					$message = 'Hello,
 
-	Your UniFaction account has requested an email change to: ' . $_POST['email'] . '. You may confirm this update at the following link:
+Your UniFaction account has requested an email change to: ' . $_POST['email'] . '.
 
-	<a href="' . $link . '">' . $link . '</a>
+Your confirmation value is: ' . $confValue . '
 
-	Thank you!
-	UniFaction';
-				
-				// Send an email
-				Email::send($settingsData['email'], "UniFaction Email Change", $message);
-				
-				Alert::success("Email Sent", "Email sent to " . $settingsData['email'] . "!");
+Thank you!
+UniFaction';
+					
+					// Send an email
+					Email::send($settingsData['email'], "UniFaction Email Change", $message);
+					
+					Alert::saveSuccess("Email Sent", "A confirmation email has been sent to " . $settingsData['email'] . "!");
+					
+					header("Location: /confirm"); exit;
+				}
+				else
+				{
+					Alert::error("Email Failed", "There was an error creating the confirmation value. Please try again later.");
+				}
 			}
 			else
 			{
@@ -104,7 +114,7 @@ if(Form::submitted("auth-global-edit"))
 }
 
 // Prepare Defaults
-$_POST['email'] = (isset($_POST['email']) ? $_POST['email'] : $settingsData['email']);
+$_POST['email'] = (isset($_POST['email']) ? Sanitize::variable($_POST['email'], "+@-.") : $settingsData['email']);
 $_POST['display_name'] = (isset($_POST['display_name']) ? $_POST['display_name'] : $settingsData['display_name']);
 $_POST['timezone'] = (isset($_POST['timezone']) ? $_POST['timezone'] : $settingsData['timezone']);
 

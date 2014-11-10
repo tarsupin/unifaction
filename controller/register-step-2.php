@@ -80,8 +80,6 @@ if(Form::submitted("uni-reg-step-fin"))
 			// Email a verification letter
 			AppVerification::sendVerification($uniID);
 			
-			Alert::saveSuccess("Email Sent", "You registered successfully! A verification email has been sent to " . $_POST['email'] . "!");
-			
 			// Assign a default image to the user
 			$packet = array(
 				"uni_id"		=> $uniID
@@ -96,8 +94,10 @@ if(Form::submitted("uni-reg-step-fin"))
 			// Log in
 			Me::login($uniID, true);
 			
+			Alert::saveSuccess("Email Sent", "You registered successfully! A verification email has been sent to " . $_POST['email'] . "!");
+			
 			// Redirect to the page in question
-			header("Location: /"); exit;
+			header("Location: /confirm"); exit;
 		}
 		else
 		{

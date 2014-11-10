@@ -1,37 +1,19 @@
 <?php if(!defined("CONF_PATH")) { die("No direct script access allowed."); }
 
-// Make sure there is a valid confirmation link
-$enc = "";
-
-if(isset($_POST['enc']))
+// Make sure there is a valid confirmation validation
+if(!isset($_SESSION[SITE_HANDLE]['confirm']))
 {
-	$enc = $_POST['enc'];
-}
-else if(isset($_GET['enc']))
-{
-	$enc = $_GET['enc'];
-}
-
-// Get the confirmation data
-if(!$enc or !$confData = Confirm::validate($enc))
-{
-	die("This confirmation link appears to be invalid.");
+	header("Location: /"); exit;
 }
 
 // Get the user based off of the ID
-if(!$userData = Database::selectOne("SELECT uni_id, email, password FROM users WHERE uni_id=? LIMIT 1", array($confData['id'] + 0)))
+if(!$userData = Database::selectOne("SELECT uni_id, email, password FROM users WHERE uni_id=? LIMIT 1", array((int) $_SESSION[SITE_HANDLE]['confirm']['uni_id'])))
 {
-	die("This confirmation link appears to be invalid.");
+	die("This password reset appears to be invalid.");
 }
 
 // Recognize Integers
 $userData['uni_id'] = (int) $userData['uni_id'];
-
-// Make sure the "chk" value matches the current password hash slice
-if($confData['chk'] != Security::hash(substr($userData['password'], 20, 20), 15, 62))
-{
-	die("This confirmation link appears to be invalid.");
-}
 
 // Get the login security question and answer
 if(!$security = Database::selectOne("SELECT question, answer FROM login_security_questions WHERE uni_id=? LIMIT 1", array($userData['uni_id'])))
@@ -58,11 +40,6 @@ if(Form::submitted("reset-uni6-pass"))
 		Alert::error("Question Short", "Your security question is too short.");
 	}
 	
-	if(!$uniID = (int) Database::selectValue("SELECT uni_id FROM users WHERE uni_id=? LIMIT 1", array($confData['id'])))
-	{
-		Alert::error("Invalid User", "The user you are trying to reset the password for is invalid.", 1);
-	}
-	
 	if(FormValidate::pass())
 	{
 		// Update the Password
@@ -70,9 +47,9 @@ if(Form::submitted("reset-uni6-pass"))
 		
 		Database::startTransaction();
 		
-		if($pass = Database::query("UPDATE users SET password=? WHERE uni_id=? LIMIT 1", array($passHash, $uniID)))
+		if($pass = Database::query("UPDATE users SET password=? WHERE uni_id=? LIMIT 1", array($passHash, $userData['uni_id'])))
 		{
-			$pass = Database::query("UPDATE login_security_questions SET question=?, answer=? WHERE uni_id=? LIMIT 1", array($_POST['security_question'], $_POST['security_answer'], $uniID));
+			$pass = Database::query("UPDATE login_security_questions SET question=?, answer=? WHERE uni_id=? LIMIT 1", array($_POST['security_question'], $_POST['security_answer'], $userData['uni_id']));
 		}
 		
 		if(Database::endTransaction($pass))
@@ -89,6 +66,10 @@ UniFaction";
 			
 			// Move to the login page, with success message
 			Alert::saveSuccess("Reset Password", "Your password was updated successfully.");
+			
+			// Unset the session responsible for this reset
+			unset($_SESSION[SITE_HANDLE]['confirm']);
+			
 			header("Location: /login"); exit;
 		}
 		else
@@ -130,7 +111,6 @@ echo '
 	</p>
 	
 	<p><input type="submit" name="submit" value="Update Login Security" /></p>
-	<input type="hidden" name="enc" value="' . Sanitize::safeword($enc, "+=/|") . '" />
 </form>
 
 </div>';

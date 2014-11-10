@@ -18,10 +18,6 @@ AppVerification::sendVerification($uniID);
 abstract class AppVerification {
 	
 	
-/****** Class Variables ******/
-	const VERIFY_SALT = 'AuthVerify:H7Ws$fc)lAy#;,NbH$wa';
-	
-	
 /****** Return a list of Account Types ******/
 	public static function sendVerification
 	(
@@ -35,27 +31,35 @@ abstract class AppVerification {
 		
 		if(isset($authData) && (int) $authData['verified'] == 0)
 		{
-			// Prepare the confirmation link
-			$link = Confirm::createLink("email-confirmation", $authData['email'], array("uni_id" => $uniID), 10, self::VERIFY_SALT);
+			// Create the appropriate confirmation value
+			$confValue = Security::randHash(14, 62);
 			
-			// Prepare the Email
-			$subject = "UniFaction Verification Email";
-			$message = 'Hello ' . $authData['handle'] . '!,
+			if(Confirm::create($confValue, array("type" => "email-confirmation", "uni_id" => $uniID)))
+			{
+				// Prepare the Email
+				$subject = "UniFaction Verification Email";
+				$message = 'Hello ' . $authData['handle'] . '!,
 
-Thank you for registering at UniFaction! Your account can be verified by visiting the following link:
+Thank you for registering at UniFaction!
 
-' . $link . '
-
-This email will only be used for password resets and emails settings that you have requested. You can change these settings at any time.
+Your confirmation value is: ' . $confValue . '
 
 Thank you!
-~ The UniFaction Staff';
-			
-			// Config
-			global $config;
-			
-			// Send the Verification Email
-			return Email::send($authData['email'], $subject, $message, $config['admin-email']);
+~ UniFaction';
+				
+				// Config
+				global $config;
+				
+				// Send the Verification Email
+				if(Email::send($authData['email'], $subject, $message, $config['admin-email']))
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		return false;
