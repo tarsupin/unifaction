@@ -34,7 +34,7 @@ if(Form::submitted("add-user-uni6"))
 		}
 		
 		// If the account doesn't already exist, try to create it
-		else if($regSuccess = Database::query("INSERT INTO users (handle, display_name, email, password, date_joined, auth_token) VALUES (?, ?, ?, ?, ?, ?)", array($_POST['handle'], $_POST['display_name'], $_POST['email'], Security::setPassword($_POST['password']), time(), Security::randHash(22, 72))))
+		else if($regSuccess = Database::query("INSERT INTO users (handle, display_name, email, password, date_joined, auth_token, verified) VALUES (?, ?, ?, ?, ?, ?, ?)", array($_POST['handle'], $_POST['display_name'], $_POST['email'], Security::setPassword($_POST['password']), time(), Security::randHash(22, 72), 1)))
 		{
 			$uniID = (int) Database::$lastID;
 			

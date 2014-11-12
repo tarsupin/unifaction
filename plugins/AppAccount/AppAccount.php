@@ -252,7 +252,7 @@ abstract class AppAccount {
 			Database::startTransaction();
 			
 			// Assign the user
-			if($pass = Database::query("UPDATE users_auth SET referred_by=? WHERE uni_id=? LIMIT 1", array($inviteData['uni_id'], $uniID)))
+			if($pass = Database::query("UPDATE users SET referred_by=? WHERE uni_id=? LIMIT 1", array($inviteData['uni_id'], $uniID)))
 			{
 				$pass = Database::query("UPDATE invitation_codes SET redeemed_by=? WHERE uni_id=? AND invite_code=? LIMIT 1", array($uniID, $inviteData['uni_id'], $inviteData['invite_code']));
 			}

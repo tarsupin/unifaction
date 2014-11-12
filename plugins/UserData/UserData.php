@@ -53,6 +53,8 @@ class UserData extends API {
 			{
 				return $userData;
 			}
+			
+			return array();
 		}
 		
 		// Get the Data by Handle

@@ -54,7 +54,7 @@ foreach($community as $key => $val)
 }
 
 echo '
-<h3 style="margin-top:22px;">Information Communities</h3>';
+<h3 style="margin-top:62px;">Information Communities</h3>';
 
 $community = array(
 	"news"	=> array("News Community", "Business, politics, new tech, and the current events of the world.", "http://widget.sync.unifaction.com/assets/featured/1/30.jpg")
@@ -70,7 +70,8 @@ foreach($community as $key => $val)
 }
 
 echo '
-<h3 style="margin-top:22px;">Sports Communities</h3>';
+<div id="sports-communities"></div>
+<h3 style="margin-top:62px;">Sports Communities</h3>';
 
 $community = array(
 	"mlb"		=> array("MLB Community", "Baseball fans to discuss MLB teams, players, stats, and more!", "http://widget.sync.unifaction.com/assets/featured/1/19.jpg")
@@ -89,7 +90,7 @@ foreach($community as $key => $val)
 
 
 echo '
-<h3 style="margin-top:22px;">Content Communities</h3>';
+<h3 style="margin-top:62px;">Content Communities</h3>';
 
 $community = array(
 	"art"		=> array("Art Community", "Join up with artists and designers to discuss arts and crafts.", "http://widget.sync.unifaction.com/assets/featured/1/1.jpg")
@@ -105,7 +106,7 @@ foreach($community as $key => $val)
 }
 
 echo '
-<h3 style="margin-top:22px;">DIY Communities</h3>';
+<h3 style="margin-top:62px;">DIY Communities</h3>';
 
 $community = array(
 	"diyauto"		=> array("DIY: Auto", "How-to's, advice, and discussion on auto repair and maintenance.", "http://widget.sync.unifaction.com/assets/featured/1/26.jpg")

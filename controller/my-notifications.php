@@ -43,7 +43,7 @@ $notifications = Notifications::get(Me::$id, 1, 50);
 foreach($notifications as $note)
 {
 	echo '
-	<p><a href=""><span class="icon-arrow-right"></span> ' . $note['message'] . '</a> - ' . Time::fuzzy($note['date_created']) . '</p>';
+	<p><a href=""><span class="icon-arrow-right"></span> ' . $note['message'] . '</a> - ' . Time::fuzzy((int) $note['date_created']) . '</p>';
 }
 
 echo '

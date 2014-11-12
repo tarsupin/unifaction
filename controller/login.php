@@ -63,7 +63,7 @@ if($getUniAccount['verified'] == 0 and $_SESSION[SITE_HANDLE]['site_login']['sit
 {
 	Alert::saveError("Not Verified", "You must verify your email, " . $getUniAccount['email'] . ".", 1);
 	
-	header("Location: /user-panel/resend-verification"); exit;
+	header("Location: /confirm"); exit;
 }
 
 // Since we're returning $getUniAccount data to the site, we remove unnecessary values from the array.

@@ -78,7 +78,7 @@ UniFaction';
 	{
 		if($passCheck = Security::getPassword($_POST['password_current'], $settingsData['password']))
 		{
-			FormValidate::password("Password", $_POST['password_new']);
+			FormValidate::password($_POST['password_new']);
 			
 			if(FormValidate::pass("Password"))
 			{

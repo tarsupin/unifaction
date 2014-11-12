@@ -39,8 +39,7 @@ require(SYS_PATH . "/controller/includes/side-panel.php");
 
 // Display the Page
 echo '
-<div id="content">
-' . Alert::display() . '
+<div id="content">' . Alert::display() . '
 
 <h2>Answer Security Question</h2>
 <p>This account has a security question associated with it.</p>

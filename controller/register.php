@@ -7,18 +7,18 @@ if(Me::$loggedIn)
 }
 
 // Check if the user has an Invitation Code
-$charLength = 8;
+$charLength = 6;
 
 if(isset($_SESSION[SITE_HANDLE]['invite-code']) and AppAccount::isInviteValid($_SESSION[SITE_HANDLE]['invite-code']))
 {
-	$charLength = 6;
+	$charLength = 4;
 }
 
 // Check the form submission
 if(Form::submitted("uni6-register-auth"))
 {
 	// Check if all of the input you sent is valid: 
-	FormValidate::username($_POST['handle'], 8, 22);
+	FormValidate::username($_POST['handle'], $charLength, 22);
 	FormValidate::password($_POST['password']);
 	
 	// Get User Data
