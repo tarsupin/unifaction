@@ -12,14 +12,11 @@ Me::$getColumns = "uni_id, role, clearance, handle, display_name";
 
 Me::initialize();
 
-if(isset($_GET['u6access']))
+// Set the active user to yourself
+if(Me::$loggedIn)
 {
-	$_SESSION['u6access'] = true;
-}
-
-if(time() < 1415747471 and !isset($_SESSION['u6access']) and $url[0] != "ajax")
-{
-	die("Welcome! UniFaction will be officially available " . Time::fuzzy(1415747471) . "! (Tuesday, November 11th).");
+	You::$id = Me::$id;
+	You::$handle = Me::$vals['handle'];
 }
 
 // Determine which page you should point to, then load it

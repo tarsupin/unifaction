@@ -1,7 +1,10 @@
 <?php if(!defined("CONF_PATH")) { die("No direct script access allowed."); }
 
+// Load the Social Menu
+require(SYS_PATH . "/controller/includes/social-menu.php");
+
 // UniFaction Dropdown Menu
-require(SYS_PATH . "/controller/includes/uni-menu-" . ENVIRONMENT . ".php");
+require(SYS_PATH . "/controller/includes/uni-menu.php");
 
 // Left Panel + Mobile Navigation
 WidgetLoader::add("SidePanel", 10, '
