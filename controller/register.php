@@ -7,11 +7,11 @@ if(Me::$loggedIn)
 }
 
 // Check if the user has an Invitation Code
-$charLength = 6;
+$charLength = 8;
 
 if(isset($_SESSION[SITE_HANDLE]['invite-code']) and AppAccount::isInviteValid($_SESSION[SITE_HANDLE]['invite-code']))
 {
-	$charLength = 4;
+	$charLength = 6;
 }
 
 // Check the form submission

@@ -4,7 +4,7 @@
 header('Access-Control-Allow-Origin: *');
 
 $search = (isset($_POST['search']) ? Sanitize::variable($_POST['search']) : "");
-$fastchatURL = URL::fastchat_social();
+$socialURL = URL::unifaction_social();
 
 // Gather the results for this search
 $handles = Database::selectMultiple("SELECT handle FROM users_handles WHERE handle LIKE ? ORDER BY uni_id LIMIT 5", array($search . "%"));
@@ -15,7 +15,7 @@ echo '
 foreach($handles as $handle)
 {
 	echo '
-	<li><a class="searchSel" href="' . $fastchatURL . "/" . $handle['handle'] . '">@' . $handle['handle'] .  '</a></li>';
+	<li><a class="searchSel" href="' . $socialURL . "/" . $handle['handle'] . '">@' . $handle['handle'] .  '</a></li>';
 }
 
 echo '</ul>';

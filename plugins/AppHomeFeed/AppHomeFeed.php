@@ -98,7 +98,6 @@ abstract class AppHomeFeed {
 		}
 		
 		// Prepare Values
-		$fastchatURL = URL::fastchat_social();
 		$socialURL = URL::unifaction_social();
 		$hashtagURL = URL::hashtag_unifaction_com();
 		
@@ -132,7 +131,7 @@ abstract class AppHomeFeed {
 			if($fd['handle'])
 			{
 				echo '
-					<div class="c-feed-author feed-desktop">Written by <a href="' . $socialURL . '/' . $fd['handle'] . '">' . $fd['display_name'] . '</a> (<a href="' . $fastchatURL . '/' . $fd['handle'] . '">@' . $fd['handle'] . '</a>)</div>';
+					<div class="c-feed-author feed-desktop">Written by <a href="' . $socialURL . '/' . $fd['handle'] . '">' . $fd['display_name'] . '</a> (<a href="' . $socialURL . '/' . $fd['handle'] . '">@' . $fd['handle'] . '</a>)</div>';
 			}
 			
 			echo '
