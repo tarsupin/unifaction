@@ -11,9 +11,9 @@
 */
 
 // Need to retrieve Me::$id early (is normally called during global, but we need it sooner for logging purposes)
-if(isset($_SESSION[SITE_HANDLE]['uni_id']))
+if(isset($_SESSION[SITE_HANDLE]['auth-login']['uni_id']))
 {
-	Me::$id = (int) $_SESSION[SITE_HANDLE]['uni_id'];
+	Me::$id = (int) $_SESSION[SITE_HANDLE]['auth-login']['uni_id'];
 }
 
 // Gather data for incoming requests
