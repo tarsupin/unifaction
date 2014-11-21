@@ -11,7 +11,15 @@ $charLength = 8;
 
 if(isset($_SESSION[SITE_HANDLE]['invite-code']) and AppAccount::isInviteValid($_SESSION[SITE_HANDLE]['invite-code']))
 {
-	$charLength = 6;
+	// VIP invites
+	if($_SESSION[SITE_HANDLE]['invite-level'] >= 5)
+	{
+		$charLength = 4;
+	}
+	else
+	{
+		$charLength = 6;
+	}
 }
 
 // Check the form submission

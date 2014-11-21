@@ -24,6 +24,7 @@ if($inviteData['redeemed_by'])
 
 // Set the Invite Code Session
 $_SESSION[SITE_HANDLE]['invite-code'] = $inviteData['invite_code'];
+$_SESSION[SITE_HANDLE]['invite-level'] = $inviteData['invite_level'];
 
 Alert::saveSuccess("Invite Code", "You have been invited to join UniFaction!");
 

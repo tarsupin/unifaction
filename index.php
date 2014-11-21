@@ -12,13 +12,6 @@ Me::$getColumns = "uni_id, role, clearance, handle, display_name";
 
 Me::initialize();
 
-// Set the active user to yourself
-if(Me::$loggedIn)
-{
-	You::$id = Me::$id;
-	You::$handle = Me::$vals['handle'];
-}
-
 // Determine which page you should point to, then load it
 require(SYS_PATH . "/routes.php");
 

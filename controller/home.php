@@ -32,7 +32,7 @@ echo '
 
 if(Me::$loggedIn)
 {
-	if(!isset($_GET['unifeed']))
+	if(isset($_GET['unifeed']))
 	{
 		// Prepare the packet
 		$packet = array(
@@ -47,8 +47,8 @@ if(Me::$loggedIn)
 		krsort($feedData);
 		
 		echo '
-		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">My Feed</a></div>
-		<div style="display:inline-block;"><a href="/?unifeed=1" style="display:block; padding:2px 8px 2px 8px;">UniFaction Feed</a></div>';
+		<div style="display:inline-block;"><a href="/" style="display:block; padding:2px 8px 2px 8px;">UniFaction Feed</a></div>
+		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">My Feed</a></div>';
 		
 		if(!$feedData)
 		{
@@ -58,8 +58,8 @@ if(Me::$loggedIn)
 	else
 	{
 		echo '
-		<div style="display:inline-block;"><a href="/" style="display:block; padding:2px 8px 2px 8px;">My Feed</a></div>
-		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">UniFaction Feed</a></div>';
+		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">UniFaction Feed</a></div>
+		<div style="display:inline-block;"><a href="/?unifeed=1" style="display:block; padding:2px 8px 2px 8px;">My Feed</a></div>';
 	}
 }
 
