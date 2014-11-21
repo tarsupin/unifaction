@@ -59,7 +59,7 @@ abstract class AppHomeFeed {
 	public static function pullArticleFromURL
 	(
 		string $articleURL		// <str> The URL to pull an article from to post to the home page.
-	): int					// RETURNS <int> The queue ID that was saved after a successful pull, or 0 on failure.
+	): bool					// RETURNS <bool> TRUE on success, FALSE on failure.
 	
 	// AppHomeFeed::pullArticleFromURL($articleURL);
 	{

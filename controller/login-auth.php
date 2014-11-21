@@ -70,7 +70,7 @@ if(Form::submitted("auth-login-uni") or isset($_SESSION[SITE_HANDLE]['auth-login
 		$hasSecAuth = AppLoginSec::hasSecondAuth($userData['uni_id']);
 		
 		// Check if the user has any special login protection
-		if($userData && $failedLogins < 15)
+		if($userData && $hasSecAuth && $failedLogins < 15)
 		{
 			// Track the login for security authentication if we haven't yet
 			if(!isset($_SESSION[SITE_HANDLE]['auth-login']))
@@ -84,7 +84,7 @@ if(Form::submitted("auth-login-uni") or isset($_SESSION[SITE_HANDLE]['auth-login
 			}
 			
 			// Don't allow the login to pass if we haven't answered the security question correctly
-			if($hasSecAuth && $_SESSION[SITE_HANDLE]['auth-login']['answer'] == false)
+			if($_SESSION[SITE_HANDLE]['auth-login']['answer'] == false)
 			{
 				$success = false;
 			}
