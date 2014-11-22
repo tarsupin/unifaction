@@ -8,13 +8,10 @@ Metadata::$index = false;
 Metadata::$follow = true;
 // Metadata::openGraph($title, $image, $url, $desc, $type);		// Title = up to 95 chars.
 
-// Pull the necessary data
-$feedData = AppHomeFeed::getFeed();
-
 // Prepare Header Handling
 Photo::prepareResponsivePage();
 
-Metadata::addHeader('<link rel="stylesheet" href="' . CDN . '/css/content-system.css" /><script src="' . CDN . '/scripts/content-system.js"></script>');
+Metadata::addHeader('<link rel="stylesheet" href="' . CDN . '/css/content-system.css" /><script src="' . CDN . '/scripts/content-system.js"></script><script src="' . CDN . '/scripts/autoscroll.js"></script>');
 
 // Run Global Script
 require(CONF_PATH . "/includes/global.php");
@@ -30,40 +27,58 @@ echo '
 <div id="panel-right"></div>
 <div id="content">' . Alert::display();
 
-if(Me::$loggedIn)
+if(Me::$loggedIn and isset($_GET['unifeed']))
 {
-	if(isset($_GET['unifeed']))
+	// Prepare the packet
+	$packet = array(
+		"uni_id"			=> Me::$id		// The UniID to send a feed to.
+	,	"page"				=> 1			// The page to return.
+	,	"num_results"		=> 30			// The number of results to return.
+	);
+	
+	$feedData = Connect::to("sync_feed", "MyFeedAPI", $packet);
+	
+	// Sort the data by newest results
+	krsort($feedData);
+	
+	echo '
+	<div style="display:inline-block;"><a href="/" style="display:block; padding:2px 8px 2px 8px;">UniFaction Feed</a></div>
+	<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">My Feed</a></div>';
+	
+	if(!$feedData)
 	{
-		// Prepare the packet
-		$packet = array(
-			"uni_id"			=> Me::$id		// The UniID to send a feed to.
-		,	"page"				=> 1			// The page to return.
-		,	"num_results"		=> 30			// The number of results to return.
-		);
-		
-		$feedData = Connect::to("sync_feed", "MyFeedAPI", $packet);
-		
-		// Sort the data by newest results
-		krsort($feedData);
-		
-		echo '
-		<div style="display:inline-block;"><a href="/" style="display:block; padding:2px 8px 2px 8px;">UniFaction Feed</a></div>
-		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">My Feed</a></div>';
-		
-		if(!$feedData)
-		{
-			echo '<div style="margin-top:16px;">This is your personal UniFaction feed!</div><div style="margin-top:16px;">Follow things by clicking the "+" button on any article hashtag.</div>';
-		}
-	}
-	else
-	{
-		echo '
-		<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">UniFaction Feed</a></div>
-		<div style="display:inline-block;"><a href="/?unifeed=1" style="display:block; padding:2px 8px 2px 8px;">My Feed</a></div>';
+		echo '<div style="margin-top:16px;">This is your personal UniFaction feed!</div><div style="margin-top:16px;">Follow things by clicking the "+" button on any article hashtag.</div>';
 	}
 }
+else
+{
+	// Pull the necessary data
+	$feedData = AppHomeFeed::getFeed();
+	
+	echo '
+	<div style="display:inline-block; border:solid 1px #c0c0c0; padding:2px 8px 2px 8px;"><a href="javascript:void(0);">UniFaction Feed</a></div>
+	<div style="display:inline-block;"><a href="/?unifeed=1" style="display:block; padding:2px 8px 2px 8px;">My Feed</a></div>';
+}
+
+// Prepare Infinite Scroll
+echo '
+<script>
+	urlToLoad = "/ajax/infinite-home";
+	elementIDToAutoScroll = "home-feed";
+	startPos = 2;
+	entriesToReturn = 1;
+	maxEntriesAllowed = 100;
+	waitDuration = 1200;
+	//appendURL = "&example=1&b=2";
+</script>';
+
+echo '
+<div id="home-feed">';
 
 AppHomeFeed::displayFeed($feedData, false, Me::$id);
+
+echo '
+</div>';
 
 echo '
 </div>';

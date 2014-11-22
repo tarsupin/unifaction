@@ -177,14 +177,12 @@ if(isset($_SESSION[SITE_HANDLE]['site_login']))
 else
 {
 	// Main Navigation
-	$html = '
+	WidgetLoader::add("MobilePanel", 10, '
 	<div class="panel-box">
 		<ul class="panel-slots">
 			<li class="nav-slot"><a href="/register">Join UniFaction<span class="icon-circle-right nav-arrow"></span></a></li>
 		</ul>
-	</div>';
-	
-	WidgetLoader::add("SidePanel", 10, $html);
+	</div>');
 	
 	$loginHead = "<h2>Login to UniFaction's Dashboard</h2>";
 }

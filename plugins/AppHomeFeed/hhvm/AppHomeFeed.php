@@ -25,13 +25,13 @@ abstract class AppHomeFeed {
 	
 /****** Get the feed data for the home page ******/
 	public static function getFeed (
-		int $startPage = 1		// <int> The starting page.
-	,	int $rowsPerPage = 15	// <int> The number of entries to return per page.
+		int $page = 1		// <int> The starting page.
+	,	int $numRows = 15	// <int> The number of entries to return per page.
 	): array <int, array<str, mixed>>					// RETURNS <int:[str:mixed]> a list of the content IDs based on recent posts.
 	
 	// $feedData = AppHomeFeed::getFeed();
 	{
-		return Database::selectMultiple("SELECT c.*, u.handle, u.display_name FROM home_content c LEFT JOIN users u ON c.uni_id=u.uni_id ORDER BY id DESC LIMIT " . (($startPage - 1) * $rowsPerPage) . ", " . ($rowsPerPage + 0), array());
+		return Database::selectMultiple("SELECT c.*, u.handle, u.display_name FROM home_content c LEFT JOIN users u ON c.uni_id=u.uni_id ORDER BY id DESC LIMIT " . (($page - 1) * $numRows) . ", " . ($numRows + 0), array());
 	}
 	
 	
@@ -94,7 +94,7 @@ abstract class AppHomeFeed {
 		// Make sure Content IDs are available
 		if(!$feedData)
 		{
-			echo '<p style="margin-top:16px; margin-bottom:0px">No articles available here at this time.</p>'; return;
+			return;
 		}
 		
 		// Prepare Values

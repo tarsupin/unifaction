@@ -7,7 +7,7 @@
 require(SYS_PATH . "/controller/includes/uni-menu.php");
 
 // Left Panel + Mobile Navigation
-WidgetLoader::add("SidePanel", 10, '
+WidgetLoader::add("MobilePanel", 10, '
 <div class="panel-box">
 	<ul class="panel-slots">
 		<li class="nav-slot"><a href="' . URL::unn_today() . Me::$slg . '">News<span class="icon-circle-right nav-arrow"></span></a></li>

@@ -12,27 +12,29 @@ require(SYS_PATH . "/controller/includes/side-panel.php");
 
 // Display the Main Page
 echo '
-<div id="content">' . Alert::display();
+<style>
+	.mm-button { background-color:#99dbff; border:solid 1px #79bbff; margin:3px; padding:4px; border-radius:3px; text-align:center; font-weight:bold; }
+	.mm-button>a { display:block; }
+</style>
 
+<div id="content" style="background:none; padding:2px;">' . Alert::display();
 
 // List of Values to show
 $array = array(
-		"UniFaction"		=> URL::unifaction_com()
-	,	"Dashboard"			=> URL::auth_unifaction_com()
-	,	"My Feed"			=> URL::feed_unifaction_com()
-	,	"My Uni"			=> URL::unifaction_me()
-	,	"Social"			=> URL::unifaction_social()
-	,	"FastChat"			=> URL::unifaction_social()
+		"Universe"			=> URL::unifaction_com()
+	,	"Unity"				=> URL::unifaction_social()
+	,	"Communities"		=> URL::unifaction_community()
 	,	"Hashtags"			=> URL::hashtag_unifaction_com()
 	,	"BlogFrog"			=> URL::blogfrog_social()
 	,	"UniJoule"			=> URL::unijoule_com()
+	,	"Avatar"			=> URL::avatar_unifaction_com()
 );
 
 // Cycle through the list of links
 foreach($array as $keyName => $value)
 {
 	echo '
-	<div style="display:inline-block; background-color:#dddddd; border:solid 1px #bbbbbb; margin:3px; padding:4px; border-radius:3px; "><a href="' . $value . '">' . $keyName . '</a></div>';
+	<div class="mm-button"><a href="' . $value . '">' . $keyName . '</a></div>';
 }
 
 echo '
