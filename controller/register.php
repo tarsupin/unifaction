@@ -58,14 +58,12 @@ Metadata::$follow = true;
 // Metadata::openGraph($title, $image, $url, $desc, $type);		// Title = up to 95 chars.
 
 // Main Navigation
-$html = '
+WidgetLoader::add("MobilePanel", 10, '
 <div class="panel-box">
 	<ul class="panel-slots">
 		<li class="nav-slot nav-back"><a href="/login-auth">Login to UniFaction<span class="icon-arrow-left nav-arrow"></span></a></li>
 	</ul>
-</div>';
-
-WidgetLoader::add("SidePanel", 10, $html);
+</div>');
 
 // Run Global Script
 require(APP_PATH . "/includes/global.php");
