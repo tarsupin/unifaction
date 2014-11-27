@@ -13,6 +13,9 @@ Metadata::$index = false;
 Metadata::$follow = false;
 // Metadata::openGraph($title, $image, $url, $desc, $type);		// Title = up to 95 chars.
 
+if(!isset($_GET['page'])) { $_GET['page'] = 1; }
+else  { $_GET['page'] = max(1, $_GET['page']); }
+
 // Run Global Script
 require(APP_PATH . "/includes/global.php");
 
@@ -38,7 +41,7 @@ echo'
 
 <h2>My Notifications</h2>';
 
-$notifications = Notifications::get(Me::$id, 1, 50);
+$notifications = Notifications::get(Me::$id, $_GET['page'], 50);
 
 foreach($notifications as $note)
 {
@@ -46,8 +49,23 @@ foreach($notifications as $note)
 	<p><a href="' . $note['url'] . '"><span class="icon-arrow-right"></span> ' . $note['message'] . '</a> - ' . Time::fuzzy((int) $note['date_created']) . '</p>';
 }
 
+if($url[1] > 1 or isset($notifications[49]))
+{
+	echo '
+	<div style="height:50px;">&nbsp;</div>';
+	if($url[1] > 1)
+	{
+		echo '
+	<a href="/my-notifications?page=' . ($url[1]-1) . '">Newer <span class="icon-arrow-left"></span></a>';
+	}
+	if(isset($notifications[49]))
+	{
+		echo '
+	<a href="/my-notifications?page=' . ($url[1]+1) . '"><span class="icon-arrow-right"> Older</span></a>';
+	}
+}
+
 echo '
-	<p></p>
 </div>';
 
 // Display the Footer
