@@ -59,12 +59,14 @@ $getUniAccount['uni_id'] = (int) $getUniAccount['uni_id'];
 $getUniAccount['verified'] = (int) $getUniAccount['verified'];
 
 // If your account isn't verified, you'll have to enter it now
+/*
 if($getUniAccount['verified'] == 0 and $_SESSION[SITE_HANDLE]['site_login']['site'] != "profile_picture")
 {
 	Alert::saveError("Not Verified", "You must verify your email, " . $getUniAccount['email'] . ".", 1);
 	
 	header("Location: /confirm"); exit;
 }
+*/
 
 // Since we're returning $getUniAccount data to the site, we remove unnecessary values from the array.
 unset($getUniAccount['email']);
