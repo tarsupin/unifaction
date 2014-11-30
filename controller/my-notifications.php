@@ -49,19 +49,19 @@ foreach($notifications as $note)
 	<p><a href="' . $note['url'] . '"><span class="icon-arrow-right"></span> ' . $note['message'] . '</a> - ' . Time::fuzzy((int) $note['date_created']) . '</p>';
 }
 
-if($url[1] > 1 or isset($notifications[49]))
+if($_GET['page'] > 1 or count($notifications) == 50)
 {
 	echo '
 	<div style="height:50px;">&nbsp;</div>';
-	if($url[1] > 1)
+	if($_GET['page'] > 1)
 	{
 		echo '
-	<a href="/my-notifications?page=' . ($url[1]-1) . '">Newer <span class="icon-arrow-left"></span></a>';
+	<a href="/my-notifications?page=' . ($_GET['page']-1) . '">Newer <span class="icon-arrow-left"></span></a>';
 	}
-	if(isset($notifications[49]))
+	if(count($notifications) == 50)
 	{
 		echo '
-	<a href="/my-notifications?page=' . ($url[1]+1) . '"><span class="icon-arrow-right"> Older</span></a>';
+	<a href="/my-notifications?page=' . ($_GET['page']+1) . '"><span class="icon-arrow-right"> Older</span></a>';
 	}
 }
 
