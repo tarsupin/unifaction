@@ -15,6 +15,7 @@ Metadata::$follow = false;
 
 if(!isset($_GET['page'])) { $_GET['page'] = 1; }
 else  { $_GET['page'] = max(1, $_GET['page']); }
+$_GET['page'] = (int) $_GET['page'];
 
 // Run Global Script
 require(APP_PATH . "/includes/global.php");
