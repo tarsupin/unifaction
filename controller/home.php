@@ -4,7 +4,7 @@
 $config['canonical'] = "/";
 $config['pageTitle'] = "UniFaction";		// Up to 70 characters. Use keywords.
 $config['description'] = "All of your online interests with one login.";	// Overwrites engine: <160 char
-Metadata::$index = false;
+Metadata::$index = true;
 Metadata::$follow = true;
 // Metadata::openGraph($title, $image, $url, $desc, $type);		// Title = up to 95 chars.
 

@@ -6,7 +6,7 @@ $_POST['home_url'] = isset($_POST['home_url']) ? Sanitize::url($_POST['home_url'
 // Form Submission
 if(Form::submitted("retrieve-article-uni"))
 {
-	FormValidate::url("Article URL", $_POST['home_url'], 5, 85);
+	FormValidate::url("Article URL", $_POST['home_url'], 5, 120);
 	
 	if(FormValidate::pass())
 	{
@@ -32,7 +32,7 @@ echo '
 <form class="uniform" action="/admin/AppHomeFeed/Retrieve Articles" method="post">' . Form::prepare("retrieve-article-uni") . '
 	<p>
 		<strong>Enter the URL of the article that you want to post:</strong>
-		<div style="margin-top:4px;"><input type="text" name="home_url" value="' . htmlspecialchars($_POST['home_url']) . '" maxlength="85" size="85" tabindex="20" /></div>
+		<div style="margin-top:4px;"><input type="text" name="home_url" value="' . htmlspecialchars($_POST['home_url']) . '" maxlength="120" size="85" tabindex="20" /></div>
 	</p>
 	<p><input type="submit" name="submit" value="Pull Article Data from URL" /></p>
 </form>';

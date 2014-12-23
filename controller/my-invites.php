@@ -13,6 +13,20 @@ Metadata::$index = false;
 Metadata::$follow = false;
 // Metadata::openGraph($title, $image, $url, $desc, $type);		// Title = up to 95 chars.
 
+// Get the invite list
+$inviteList = AppAccount::getUserInviteList(Me::$id);
+
+// Make sure the user possesses at least three invites
+if(count($inviteList) < 3)
+{
+	for($a = count($inviteList); $a < 3; $a++)
+	{
+		AppAccount::createInvitationCode(Me::$id);
+	}
+	
+	$inviteList = AppAccount::getUserInviteList(Me::$id);
+}
+
 // Run Global Script
 require(APP_PATH . "/includes/global.php");
 
@@ -32,8 +46,6 @@ echo '
 echo'
 <h2>My Invitations</h2>
 <p>This a list of your available invitation links that you can use to invite others to UniFaction.</p>';
-
-$inviteList = AppAccount::getUserInviteList(Me::$id);
 
 foreach($inviteList as $invite)
 {

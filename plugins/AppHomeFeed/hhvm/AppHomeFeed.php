@@ -77,7 +77,7 @@ abstract class AppHomeFeed {
 			return AppHomeFeed::insert((int) $response['uni_id'], trim($response['url'], "/") . '/' . $response['url_slug'], $response['title'], $response['description'], $response['primary_hashtag'], $response['hashtag_list'], $response['thumbnail']);
 		}
 		
-		return 0;
+		return false;
 	}
 	
 	
