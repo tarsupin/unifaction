@@ -28,6 +28,7 @@ $array = array(
 	,	"BlogFrog"			=> URL::blogfrog_social()
 	,	"UniJoule"			=> URL::unijoule_com()
 	,	"Avatar"			=> URL::avatar_unifaction_com()
+	,	"UniCreatures"		=> URL::unicreatures_com()
 );
 
 // Cycle through the list of links
