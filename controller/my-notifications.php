@@ -47,7 +47,7 @@ $notifications = Notifications::get(Me::$id, $_GET['page'], 50);
 foreach($notifications as $note)
 {
 	echo '
-	<p><a href="' . $note['url'] . '"><span class="icon-arrow-right"></span> ' . $note['message'] . '</a> - ' . Time::fuzzy((int) $note['date_created']) . '</p>';
+	<p><a href="' . $note['url'] . '"' . ($note['uni_id'] == 0 ? ' style="color:#ee6666;"' : '') . '><span class="icon-arrow-right"></span> ' . $note['message'] . '</a> - ' . Time::fuzzy((int) $note['date_created']) . '</p>';
 }
 
 if($_GET['page'] > 1 or count($notifications) == 50)

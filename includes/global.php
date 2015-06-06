@@ -10,6 +10,12 @@ require(SYS_PATH . "/controller/includes/uni-menu.php");
 WidgetLoader::add("MobilePanel", 10, '
 <div class="panel-box">
 	<ul class="panel-slots">
+		<li class="nav-slot"><a href="/my-notifications' . Me::$slg . '">My Notifications<span class="icon-circle-right nav-arrow"></span></a></li>
+		<li class="nav-slot"><a href="/my-invitations' . Me::$slg . '">My Invitations<span class="icon-circle-right nav-arrow"></span></a></li>
+	</ul>
+</div>');
+
+/*
 		<li class="nav-slot"><a href="' . URL::unn_today() . Me::$slg . '">News<span class="icon-circle-right nav-arrow"></span></a></li>
 		<li class="nav-slot"><a href="' . URL::entertainment_unifaction_com() . Me::$slg . '">Entertainment<span class="icon-circle-right nav-arrow"></span></a></li>
 		<li class="nav-slot"><a href="' . URL::sports_unifaction_com() . Me::$slg . '">Sports<span class="icon-circle-right nav-arrow"></span></a></li>
@@ -22,5 +28,4 @@ WidgetLoader::add("MobilePanel", 10, '
 		<li class="nav-slot"><a href="' . URL::travel_unifaction_com() . Me::$slg . '">Travel<span class="icon-circle-right nav-arrow"></span></a></li>
 		<li class="nav-slot"><a href="' . URL::food_unifaction_com() . Me::$slg . '">Food &amp; Recipes<span class="icon-circle-right nav-arrow"></span></a></li>
 		<li class="nav-slot"><a href="' . URL::science_unifaction_com() . Me::$slg . '">Science<span class="icon-circle-right nav-arrow"></span></a></li>
-	</ul>
-</div>');
+*/

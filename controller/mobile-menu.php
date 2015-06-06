@@ -21,6 +21,17 @@ echo '
 
 // List of Values to show
 $array = array(
+		"Unity"				=> URL::unifaction_social()
+	,	"Community"			=> URL::avatar_unifaction_community()
+	,	"Inbox"				=> URL::inbox_unifaction_com()
+	,	"UniJoule"			=> URL::unijoule_com()
+	,	"Karma"				=> URL::karma_unifaction_com()
+	,	"Avatar"			=> URL::avatar_unifaction_com()
+	,	"UniCreatures"		=> URL::unicreatures_com()
+);
+
+/*
+$array = array(
 		"Universe"			=> URL::unifaction_com()
 	,	"Unity"				=> URL::unifaction_social()
 	,	"Communities"		=> URL::unifaction_community()
@@ -30,6 +41,7 @@ $array = array(
 	,	"Avatar"			=> URL::avatar_unifaction_com()
 	,	"UniCreatures"		=> URL::unicreatures_com()
 );
+*/
 
 // Cycle through the list of links
 foreach($array as $keyName => $value)

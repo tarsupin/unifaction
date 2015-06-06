@@ -7,10 +7,10 @@ $activeHashtag = isset($_POST['activeHashtag']) ? Sanitize::variable($_POST['act
 $categories = array("articles", "people");
 
 // Create a new featured content widget
-$featuredWidget = new FeaturedWidget($activeHashtag, $categories);
+//$featuredWidget = new FeaturedWidget($activeHashtag, $categories);
 
 // If you want to display the FeaturedWidget by itself:
-echo $featuredWidget->get();
+//echo $featuredWidget->get();
 
 
 
@@ -23,10 +23,10 @@ if($activeHashtag)
 
 
 // Prepare the Trending Widget Data
-$trendingCount = 6;
+//$trendingCount = 6;
 
 // Create a new widget
-$trendingWidget = new TrendingWidget($trendingCount);
+//$trendingWidget = new TrendingWidget($trendingCount);
 
 // If you want to display the widget by itself:
-echo $trendingWidget->get();
+//echo $trendingWidget->get();
