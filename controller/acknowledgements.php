@@ -21,8 +21,8 @@ echo '
 	<h3>Acknowledgements and Special Thanks</h3>
 	
 	<p>
-		<strong>icomoon.com</strong><br />
-		icomoon.com provided many of the icons used on this site.
+		<strong>icomoon.io</strong><br />
+		icomoon.io provided many of the icons used on this site.
 	</p>
 	
 </div>';
